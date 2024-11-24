@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 export default function EnquiryForm() {
   const defaultEnquiry = {
@@ -21,6 +22,20 @@ export default function EnquiryForm() {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log("Enquiry Form Data:", enquiryForm);
+    axios
+      .post(`${import.meta.env.VITE_API_BASE_URL}/enquiry`, enquiryForm, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(() => {
+        setEnquiryForm(defaultEnquiry);
+        alert("Enquiry Submitted");
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Unable to submit the enquiry");
+      });
   };
 
   return (
