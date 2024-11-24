@@ -19,23 +19,33 @@ export default function EnquiryForm() {
     }));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log("Enquiry Form Data:", enquiryForm);
-    axios
-      .post(`${import.meta.env.VITE_API_BASE_URL}/enquiry`, enquiryForm, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then(() => {
-        setEnquiryForm(defaultEnquiry);
-        alert("Enquiry Submitted");
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Unable to submit the enquiry");
-      });
+
+    try {
+      console.log("Enquiry Form Data:", enquiryForm);
+
+      // Post request to API
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/enquiry`,
+        enquiryForm,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      // Reset form on success
+      setEnquiryForm(defaultEnquiry);
+      alert("Enquiry submitted successfully!");
+    } catch (err) {
+      console.error("Error submitting enquiry:", err);
+      alert(
+        err.response?.data?.message ||
+          "Unable to submit the enquiry. Please try again later."
+      );
+    }
   };
 
   return (
