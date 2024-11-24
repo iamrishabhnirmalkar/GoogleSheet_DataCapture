@@ -1,8 +1,15 @@
 import express from 'express'
+import appConfig from './config/appConfig.js'
+import router from './router/router.js'
+
+const { PORT } = appConfig
 
 const app = express()
 
-app.listen(3000, () => {
-    console.info(`Server is running on port ${3000}`)
+app.use(express.json())
+app.use('/', router)
+
+app.listen(PORT, () => {
+    console.info(`Server is running on port ${PORT}`)
 })
 
