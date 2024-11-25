@@ -1,4 +1,4 @@
-# Enquiry Capturing System
+# GoogleSheet Data Capture
 
 This system captures enquiries and stores them in a Google Sheet via a client-server implementation.
 
